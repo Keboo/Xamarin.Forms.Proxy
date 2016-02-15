@@ -21,3 +21,5 @@ Usagge:
   </Label>
 </ContentPage>
 ```
+
+For anyone wanting a simple MultiBinding implementation using IMarkupExtension that can be used without creating a special PCL you can find one [here](https://gist.github.com/Keboo/0d6e42028ea9e4256715). Please note that the IMarkupExtention implementation will not work when used within a setter. Use the MultiBinding class here if you need support for setters.

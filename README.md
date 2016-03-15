@@ -6,7 +6,7 @@ It does this by exploiting the InternalsVisibleTo attribute and sets its assembl
 ##MultiBinding
 This class adds a MultiBinding (similar to WPF's MultiBinding class). It currently only supports one way bindings using either a string format or a value converter.
 
-Usagge:
+Usage:
 ```XAML
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -22,4 +22,6 @@ Usagge:
 </ContentPage>
 ```
 
-For anyone wanting a simple MultiBinding implementation using IMarkupExtension that can be used without creating a special PCL you can find one [here](https://gist.github.com/Keboo/0d6e42028ea9e4256715). Please note that the IMarkupExtention implementation will not work when used within a setter. Use the MultiBinding class here if you need support for setters.
+For anyone wanting a simple MultiBinding implementation using IMarkupExtension that can be used without creating a special PCL you can find one [here](https://gist.github.com/Keboo/0d6e42028ea9e4256715). Please note that the IMarkupExtention implementation will not work when used within a setter. Use the MultiBinding class here if you need support for setters. 
+
+For additional details see blog posted [here](http://intellitect.com/multibinding-in-xamarin-forms/).

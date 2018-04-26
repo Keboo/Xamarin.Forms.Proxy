@@ -46,21 +46,22 @@ public class MultiBinding : BindingBase
         _bindingExpression = new BindingExpression(this, nameof(InternalValue.Value));
     }
 
-    internal override void Apply(object newContext, BindableObject bindObj, BindableProperty targetProperty)
+    internal override void Apply(object context, BindableObject bindObj, BindableProperty targetProperty,
+        bool fromBindingContextChanged = false)
     {
         if (Mode != BindingMode.OneWay)
             throw new InvalidOperationException($"{nameof(MultiBinding)} only supports {nameof(Mode)}.{nameof(BindingMode.OneWay)}");
 
-        object source = Context ?? newContext;
-        base.Apply(source, bindObj, targetProperty);
-
+        object source = Context ?? context;
+        base.Apply(context, bindObj, targetProperty, fromBindingContextChanged);
+        
         _isApplying = true;
         foreach (BindingBase binding in Bindings)
         {
-            var property = BindableProperty.Create($"{nameof(MultiBinding)}Property-{Guid.NewGuid().ToString("N")}", typeof(object),
+            var property = BindableProperty.Create($"{nameof(MultiBinding)}Property-{Guid.NewGuid():N}", typeof(object),
                 typeof(MultiBinding), default(object), propertyChanged: (bindableObj, o, n) => SetValue(bindableObj));
             _properties.Add(property);
-            binding.Apply(source, bindObj, property);
+            binding.Apply(source, bindObj, property, fromBindingContextChanged);
         }
         _isApplying = false;
         SetValue(bindObj);
@@ -78,12 +79,12 @@ public class MultiBinding : BindingBase
         _bindingExpression.Apply(fromTarget);
     }
 
-    internal override void Unapply()
+    internal override void Unapply(bool fromBindingContextChanged = false)
     {
-        base.Unapply();
+        base.Unapply(fromBindingContextChanged);
         foreach (BindingBase binding in Bindings)
         {
-            binding.Unapply();
+            binding.Unapply(fromBindingContextChanged);
         }
         _properties.Clear();
         _bindingExpression?.Unapply();

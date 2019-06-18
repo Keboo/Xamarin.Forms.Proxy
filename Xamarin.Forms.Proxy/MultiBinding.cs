@@ -122,7 +122,7 @@ namespace Xamarin.Forms.Proxy
         private void SetInternalValue(BindableObject source)
         {
             if (source == null || _isApplying) return;
-            _internalValue.Value = source.GetValues(Properties);
+            _internalValue.Value = Properties.Select(source.GetValue).ToArray();
         }
 
         internal override BindingBase Clone()

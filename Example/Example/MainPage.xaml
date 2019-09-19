@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:proxy="clr-namespace:Xamarin.Forms.Proxy;assembly=Xamarin.Forms.Core.UnitTests"
+             xmlns:example="clr-namespace:Example;assembly=Example"
+             mc:Ignorable="d"
+             x:Class="Example.MainPage">
+    <ContentPage.Resources>
+        <example:ColorConverter x:Key="ColorConverter"/>
+    </ContentPage.Resources>
+    <StackLayout>
+        <!-- Place new controls here -->
+        <Label Text="Red (hex)" HorizontalOptions="Start"/>
+        <Entry x:Name="RedEntry" Keyboard="Plain" />
+        <Label Text="Green (hex)" HorizontalOptions="Start"/>
+        <Entry x:Name="GreenEntry" />
+        <Label Text="Blue (hex)" HorizontalOptions="Start"/>
+        <Entry x:Name="BlueEntry" />
+
+        <Label>
+            <Label.Text>
+                <proxy:MultiBinding StringFormat="Color Hex Value: 0x{0}{1}{2}">
+                    <Binding Path="Text" Source="{x:Reference RedEntry}" />
+                    <Binding Path="Text" Source="{x:Reference GreenEntry}" />
+                    <Binding Path="Text" Source="{x:Reference BlueEntry}" />
+                </proxy:MultiBinding>
+            </Label.Text>
+        </Label>
+
+        <BoxView HeightRequest="100">
+            <BoxView.BackgroundColor>
+                <proxy:MultiBinding Converter="{StaticResource ColorConverter}">
+                    <Binding Path="Text" Source="{x:Reference RedEntry}" />
+                    <Binding Path="Text" Source="{x:Reference GreenEntry}" />
+                    <Binding Path="Text" Source="{x:Reference BlueEntry}" />
+                </proxy:MultiBinding>
+            </BoxView.BackgroundColor>
+        </BoxView>
+    </StackLayout>
+
+</ContentPage>
